@@ -1,0 +1,13 @@
+---
+# roles/mikrotik/tasks/main.yml
+# Entry point for the mikrotik role.
+# Calls individual task files to keep concerns separated.
+#
+# Current tasks:
+#   gather.yml  — read-only scan of router state
+#
+# Future tasks to add when ready:
+#   harden.yml  — apply hardening changes after reviewing gather output
+
+- name: Gather current router state
+  ansible.builtin.import_tasks: gather.yml

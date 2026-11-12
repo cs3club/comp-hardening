@@ -1,0 +1,14 @@
+---
+# requirements.yml
+# Ansible collections this project depends on.
+# Install all of them with:
+#   ansible-galaxy collection install -r requirements.yml
+
+collections:
+  - name: ansible.netcommon
+    version: "8.7.1"
+    # Required for network_cli connection type used by MikroTik inventory.
+
+  - name: community.routeros
+    version: "3.23.0"
+    # RouterOS modules for MikroTik devices.

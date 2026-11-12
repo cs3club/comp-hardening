@@ -1,0 +1,96 @@
+---
+# roles/mikrotik/tasks/gather.yml
+# READ-ONLY scan of the MikroTik router.
+# This file makes ZERO changes — it only reads and displays current state.
+# Review the output before running any hardening tasks.
+
+- name: Gather current firewall filter rules
+  community.routeros.command:
+    commands:
+      - ip firewall filter print terse
+  register: fw_filter
+
+- name: Gather current firewall NAT rules
+  community.routeros.command:
+    commands:
+      - ip firewall nat print terse
+  register: fw_nat
+
+- name: Gather current services
+  community.routeros.command:
+    commands:
+      - ip service print
+  register: services
+
+- name: Gather current users
+  community.routeros.command:
+    commands:
+      - user print
+  register: users
+
+- name: Gather current interfaces
+  community.routeros.command:
+    commands:
+      - interface print
+  register: interfaces
+
+- name: Gather current IP addresses
+  community.routeros.command:
+    commands:
+      - ip address print
+  register: addresses
+
+- name: Gather current routes
+  community.routeros.command:
+    commands:
+      - ip route print
+  register: routes
+
+- name: Gather current DNS settings
+  community.routeros.command:
+    commands:
+      - ip dns print
+  register: dns
+
+- name: Gather system identity and version
+  community.routeros.command:
+    commands:
+      - system identity print
+      - system resource print
+  register: system_info
+
+- name: Show firewall filter rules
+  ansible.builtin.debug:
+    msg: "{{ fw_filter.stdout_lines }}"
+
+- name: Show firewall NAT rules
+  ansible.builtin.debug:
+    msg: "{{ fw_nat.stdout_lines }}"
+
+- name: Show services
+  ansible.builtin.debug:
+    msg: "{{ services.stdout_lines }}"
+
+- name: Show users
+  ansible.builtin.debug:
+    msg: "{{ users.stdout_lines }}"
+
+- name: Show interfaces
+  ansible.builtin.debug:
+    msg: "{{ interfaces.stdout_lines }}"
+
+- name: Show IP addresses
+  ansible.builtin.debug:
+    msg: "{{ addresses.stdout_lines }}"
+
+- name: Show routes
+  ansible.builtin.debug:
+    msg: "{{ routes.stdout_lines }}"
+
+- name: Show DNS settings
+  ansible.builtin.debug:
+    msg: "{{ dns.stdout_lines }}"
+
+- name: Show system info
+  ansible.builtin.debug:
+    msg: "{{ system_info.stdout_lines }}"

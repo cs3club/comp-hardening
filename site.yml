@@ -1,0 +1,22 @@
+---
+# site.yml
+# Master playbook — entry point for everything.
+#
+# Workflow:
+#   1. Run this playbook to scan the router and see current state
+#   2. Review the output carefully
+#   3. Edit roles/mikrotik/tasks/harden.yml with your chosen changes
+#   4. Run with --tags harden to apply only hardening changes
+#
+# Run with:
+#   ansible-playbook site.yml -e @vars/secrets.yml          (scan only)
+#   ansible-playbook site.yml -e @vars/secrets.yml --check  (dry run)
+
+- name: MikroTik hardening
+  hosts: mikrotik
+  # gather_facts: false is required for RouterOS devices.
+  # Ansible's fact gathering targets Linux systems and fails on MikroTik.
+  gather_facts: false
+  roles:
+    - role: mikrotik
+      tags: mikrotik
